@@ -32,15 +32,21 @@ class locum_koha_30x {
 		$server = $this->locum_config[ils_config][ils_server];
 		$port = $this->locum_config[ils_config][ils_harvest_port];
 		
-		$url = 'http://'.$server.':'.$port.'/cgi-bin/koha/oai.pl?verb=GetRecord&metadataPrefix=marcxml&identifier=KOHA-OAI-TEST:' . $bnum;
-		$xml = @simplexml_load_file($url);
+		//$url = 'http://'.$server.':'.$port.'/cgi-bin/koha/oai.pl?verb=GetRecord&metadataPrefix=marcxml&identifier=KOHA-OAI-TEST:' . $bnum;
+		//$xml = @simplexml_load_file($url);
 		
-		$bib_info_marc = self::parse_marc_subfields($xml->GetRecord->record->metadata->marcxml);
+		//$bib_info_marc = self::parse_marc_subfields($xml->GetRecord->record->metadata->marcxml);
+		
+		$url = 'http://'.$server.':'.$port.'/cgi-bin/koha/ilsdi.pl?service=GetRecords&id=' . $bnum;
+		$xml = @simplexml_load_file($url);
+
+		$bib_info_marc = self::parse_marc_subfields($xml->record->marcxml->record);
 		
 		// Process record information
 		$bib[bnum]           = (int) $bnum;
 		$bib[bib_created]    = "2000-10-10"; # not supported by OAI-PMH ?
-		$bib[bib_lastupdate] = substr($xml->GetRecord->record->header->datestamp, 0, 10);
+		//$bib[bib_lastupdate] = substr($xml->GetRecord->record->header->datestamp, 0, 10);
+		$bib[bib_lastupdate] = "2000-10-10";
 		$bib[bib_prevupdate] = "2000-10-10"; # not supported by koha ?
 		$bib[bib_revs]       = 1;            # not supported by koha ?
 		
