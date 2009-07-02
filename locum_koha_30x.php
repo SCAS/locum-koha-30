@@ -124,7 +124,7 @@ class locum_koha_30x {
 		// Notes
 		$bib[notes] = '';
 		$notes = self::prepare_marc_values($bib_info_marc['300'], array('a'));
-		$bib[notes] = $notes[0];
+		$bib[notes] = serialize($notes);
 		
 		// Language
 		$bib[lang] = '';
