@@ -56,12 +56,12 @@ class locum_koha_30x {
 		
 		$bib[loc_code] = '1';
 		$loc_code = self::prepare_marc_values($bib_info_marc['995'], array('e'));
-		$bib[loc_code] = $loc_code[0];
+		$bib[loc_code] = $loc_code[0] ? $loc_code[0] : '1';
 		
 		// Material Code
 		$bib[mat_code] = 'LITT';
 		$mat_code = self::prepare_marc_values($bib_info_marc['200'], array('b'));
-		$bib[mat_code] = $mat_code[0];
+		$bib[mat_code] = $mat_code[0] ? $mat_code[0] : 'LITT';
 
 		// Process Author information
 		$bib[author] = '';
@@ -124,7 +124,7 @@ class locum_koha_30x {
 		// Notes
 		$bib[notes] = '';
 		$notes = self::prepare_marc_values($bib_info_marc['300'], array('a'));
-		$bib[notes] = serialize($notes);
+		$bib[notes] = count($notes) ? serialize($notes) : '';
 		
 		// Language
 		$bib[lang] = '';
