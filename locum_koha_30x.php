@@ -166,6 +166,7 @@ class locum_koha_30x {
 		$is[holds]  = (int) count($xml->record->reserves->reserve);
 		$is[order]  = (int) $xml->record->order;
 		$is[copies] = (int) count($xml->record->items->item) - count($xml->record->issues->issue);
+		$is[total]  = (int) count($xml->record->items->item);
 		
 		if ($xml->record->items->item) {
 			foreach($xml->record->items->item as $item) {
